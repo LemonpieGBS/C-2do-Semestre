@@ -2,9 +2,16 @@
 {
     public class Program
     {
+        // Por valor
         public static double CalcularAreaTriangulo(double baseTriangulo, double alturaTriangulo)
         {
             return (baseTriangulo * alturaTriangulo) / 2;
+        }
+
+        // Por referencia
+        public static void CalcularAreaTriangulo(ref double baseTriangulo, ref double alturaTriangulo, ref double resultado)
+        {
+            resultado = (baseTriangulo * alturaTriangulo) / 2;
         }
 
         public static void Main()
@@ -36,7 +43,10 @@
             Console.WriteLine("+: Ingrese la altura del tríangulo: ");
             double alturaObtenida = double.Parse(Console.ReadLine() ?? "");
 
-            Console.WriteLine($"El área del triangulo es: {CalcularAreaTriangulo(baseObtenida, alturaObtenida)}");
+            double resultado = 0;
+
+            CalcularAreaTriangulo(ref baseObtenida, ref alturaObtenida, ref resultado);
+            Console.WriteLine($"El área del triangulo es: {resultado}");
         }
     }
 }
