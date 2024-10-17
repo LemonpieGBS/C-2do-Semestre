@@ -28,10 +28,19 @@ class Program
         return diccionario;
     }
 
-    public static string? Traducir(Dictionary<string, string> diccionario, string palabraIngles)
+    public static void Traducir(Dictionary<string, string> diccionario)
     {
-        diccionario.TryGetValue(palabraIngles, out string? palabraEspañol);
-        return palabraEspañol;
+        Console.WriteLine("+: Escriba la palabra (en ingles) a traducir:");
+        string palabraATraducir = Console.ReadLine() ?? "";
+
+        if (diccionario.TryGetValue(palabraATraducir, out string? palabraEspañol))
+        {
+            Console.WriteLine($"!: La traducción de {palabraATraducir} es {palabraEspañol}");
+        } else
+        {
+            Console.WriteLine($"!: No existe una traducción para {palabraATraducir}");
+        }
+        Console.WriteLine();
     }
 
     static void Main(string[] args)
@@ -73,23 +82,7 @@ class Program
             switch(Opcion)
             {
                 case 1: diccionario = CrearDiccionario(); break;
-                case 2:
-                    {
-                        Console.WriteLine("+: Escriba la palabra (en ingles) a traducir:");
-                        string palabraATraducir = Console.ReadLine() ?? "";
-                        string? palabraTraducida = Traducir(diccionario, palabraATraducir);
-
-                        if(palabraTraducida is not null)
-                        {
-                            Console.WriteLine($"!: La traducción de {palabraATraducir} es {palabraTraducida}");
-                        } else
-                        {
-                            Console.WriteLine("!: No se pudo encontrar la palabra!");
-                        }
-
-                        Console.WriteLine();
-                    }
-                    break;
+                case 2: Traducir(diccionario);  break;
                 case 3:
                     {
                         int i = 0;
