@@ -99,7 +99,7 @@ class Program
         más alto y el promedio más bajo. 
         */
 
-        List<Estudiante> listaEstudiante = new(){};
+        List<Estudiante> listaEstudiantes = new(){};
         Console.WriteLine(
 """"          
    _____      _      ___   ___  _ 
@@ -111,7 +111,64 @@ class Program
 """"
         );
 
-        double 
+        bool exit = false;
+        while (!exit) {
+            Console.WriteLine(
+                """"
+                -- Menu Principal --
+                  #1. Agregar Estudiante
+                  #2. Ver Promedio
+                  #3. Mejor y Peor calificación
+                  #4. <- Salir
+                """");
+
+            int opcion;
+            while (!int.TryParse(Console.ReadLine() ?? "", out opcion)) {
+                Console.WriteLine("!: El input no es valido, intente de nuevo!");
+            }
+
+            switch(opcion){
+                default: break;
+
+                case 1: {
+                    System.Console.WriteLine("+: Ingrese el nombre del estudiante: ");
+                    string nuevoNombre = Console.ReadLine() ?? "";
+
+                    System.Console.WriteLine("+: Ingrese la cantidad de notas: ");
+                    int cantNotas = int.Parse(Console.ReadLine() ?? "");
+
+                    List<double> notasTemp = new(){};
+                    for(int i = 1; i <= cantNotas; i++) {
+                        System.Console.WriteLine($"+: Ingrese la nota #{i}");
+                        notasTemp.Add(double.Parse(Console.ReadLine() ?? ""));
+                    }
+
+                    listaEstudiantes.Add( new Estudiante(nuevoNombre, notasTemp) );
+                }
+                break;
+
+                case 2: {
+                    System.Console.WriteLine("+: Ingrese el nombre de un estudiante a sacar el promedio de");
+                    string nombreBuscar = Console.ReadLine() ?? "";
+                    
+                    bool encontrado = false;
+                    foreach(Estudiante estudiante in listaEstudiantes) {
+                        if(estudiante.Nombre == nombreBuscar) {
+                            Console.WriteLine($"El estudiante {nombreBuscar} tiene un promedio de {CalcularPromedio(estudiante):0.00}");
+                            encontrado = true;
+                        }
+                    }
+
+                    if(!encontrado) System.Console.WriteLine("!: El estudiante no existe!");
+
+                }
+                break;
+
+                case 3: MejorPeorEstudiante(listaEstudiantes); break;
+
+                case 4: exit = true; break;
+            }
+        }
 
         Console.WriteLine();
     }
