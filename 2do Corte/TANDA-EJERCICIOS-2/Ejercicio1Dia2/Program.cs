@@ -1,4 +1,6 @@
-﻿namespace Ejercicio1Dia2;
+﻿using System.Net;
+
+namespace Ejercicio1Dia2;
 
 /*
 Crear un programa que simule la gestión de un inventario en una tienda. Utilizar un menú para
@@ -39,7 +41,7 @@ class Program
                   Nombre: {Nombre}
                   Cantidad: {Cantidad}
                   Precio: {Precio}
-                --------------
+                -------------------
                 """";
         }
     }
@@ -94,7 +96,7 @@ class Program
                 $""""
                 PRODUCTO ENCONTRADO!
 
-                {inventario[indiceEncontrado ?? 0].ToString}
+                {inventario[indiceEncontrado ?? 0].ToString()}
 
                 +: Está seguro de eliminarlo? (true/false)
                 """");
@@ -105,8 +107,166 @@ class Program
             }
         }
     }
+
+    public static void ModificarProducto(List<Producto> inventario)
+    {
+        Console.WriteLine("+: Ingrese el ID del producto a modificar:");
+        int idBuscado = int.Parse(Console.ReadLine() ?? "");
+
+        int? indiceEncontrado = IDExistente(inventario, idBuscado);
+
+        if (indiceEncontrado is null)
+        {
+            Console.WriteLine("El producto no se encontró!");
+        } else
+        {
+            Console.WriteLine(
+                $""""
+                PRODUCTO ENCONTRADO!
+
+                {inventario[indiceEncontrado ?? 0].ToString()}
+
+                +: Que atributo desea eliminar? (Nombre/Cantidad/Precio)
+                """");
+            
+            string atributoEditar = Console.ReadLine() ?? "";
+            atributoEditar = atributoEditar.ToUpper();
+
+            switch(atributoEditar) {
+                case "NOMBRE": {
+                    Console.WriteLine(
+                        $""""
+                        ----- EDICIÓN -----
+                        Valor Viejo: {inventario[indiceEncontrado ?? 0].Nombre}
+
+                        """"
+                    );
+
+                    Console.Write("Valor Nuevo: ");
+                    string nuevoEditar = Console.ReadLine() ?? "";
+
+                    inventario[indiceEncontrado ?? 0].Nombre = nuevoEditar;
+                    Console.WriteLine("-------------------\n");
+                }
+                break;
+
+                case "CANTIDAD": {
+                    Console.WriteLine(
+                        $""""
+                        ----- EDICIÓN -----
+                        Valor Viejo: {inventario[indiceEncontrado ?? 0].Cantidad}
+
+                        """"
+                    );
+
+                    Console.Write("Valor Nuevo: ");
+                    int nuevoEditar = int.Parse(Console.ReadLine() ?? "");
+
+                    inventario[indiceEncontrado ?? 0].Cantidad = nuevoEditar;
+                    Console.WriteLine("-------------------\n");
+                }
+                break;
+
+                case "PRECIO": {
+                    Console.WriteLine(
+                        $""""
+                        ----- EDICIÓN -----
+                        Valor Viejo: {inventario[indiceEncontrado ?? 0].Precio}
+
+                        """"
+                    );
+
+                    Console.Write("Valor Nuevo: ");
+                    double nuevoEditar = double.Parse(Console.ReadLine() ?? "");
+
+                    inventario[indiceEncontrado ?? 0].Precio = nuevoEditar;
+                    Console.WriteLine("-------------------\n");
+                }
+                break;
+
+                default: {
+                    Console.WriteLine(
+                        $""""
+                        -------------------
+                        El atributo {atributoEditar} no es un atributo válido
+                        -------------------
+                        """");
+                }
+                break;
+            }
+        }
+    }
+
+    public static void ConsultarProducto(List<Producto> inventario) {
+        Console.WriteLine("+: Ingrese el ID del producto a consultar:");
+        int idBuscado = int.Parse(Console.ReadLine() ?? "");
+
+        int? indiceEncontrado = IDExistente(inventario, idBuscado);
+
+        if (indiceEncontrado is null)
+        {
+            Console.WriteLine("El producto no se encontró!");
+        } else
+        {
+            Console.WriteLine(
+                $""""
+                {inventario[indiceEncontrado ?? 0].ToString()}
+                """");
+        }
+    }
+
+    public static void MostrarProductos(List<Producto> inventario) {
+
+        Console.WriteLine("\n### INVENTARIO ###");
+
+        Console.WriteLine("-------------------");
+        foreach(Producto producto in inventario) {
+            Console.WriteLine(producto.ToString());
+        }
+
+        Console.WriteLine();
+    }
+
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.WriteLine(
+            """"
+            ░        ░░        ░░        ░░   ░░░  ░░       ░░░░      ░░
+            ▒▒▒▒  ▒▒▒▒▒▒▒▒  ▒▒▒▒▒  ▒▒▒▒▒▒▒▒    ▒▒  ▒▒  ▒▒▒▒  ▒▒  ▒▒▒▒  ▒
+            ▓▓▓▓  ▓▓▓▓▓▓▓▓  ▓▓▓▓▓      ▓▓▓▓  ▓  ▓  ▓▓  ▓▓▓▓  ▓▓  ▓▓▓▓  ▓
+            ████  ████████  █████  ████████  ██    ██  ████  ██        █
+            ████  █████        ██        ██  ███   ██       ███  ████  █
+
+            """");
+        
+        bool exit = false;
+        List<Producto> inventario = new(){};
+        
+        do {
+            Console.Write(
+                """"
+                ### - MENU PRINCIPAL - ###
+                |   #1. Agregar Producto
+                |   #2. Eliminar Producto
+                |   #3. Modificar Producto
+                |   #4. Consultar Producto
+                |   #5. Mostrar Productos
+                |   #6. <- Salir
+
+                > 
+                """"
+            );
+
+            int opcion = int.Parse(Console.ReadLine() ?? "");
+            switch(opcion) {
+                case 1: AgregarProducto(inventario); break;
+                case 2: EliminarProducto(inventario); break;
+                case 3: ModificarProducto(inventario); break;
+                case 4: ConsultarProducto(inventario); break;
+                case 5: MostrarProductos(inventario); break;
+                case 6: exit = true; break;
+                default: break;
+            }
+        } while(!exit);
     }
 }
