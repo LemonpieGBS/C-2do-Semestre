@@ -21,10 +21,10 @@ El programa constará de dos métodos, aparte de Main():
 
 class Program
 {
-    public static Dictionary<string, string> CrearDiccionario()
+    public static List<Tuple<string, string>> CrearDiccionario()
     {
         const int MaximoEntradas = 5;
-        Dictionary<string, string> diccionario = new() { };
+        List<Tuple<string, string>> diccionario = new() { };
 
         Console.WriteLine($"+: Cuantas entradas desea agregar? (El máximo es 5)");
         int Entradas = Math.Min(int.Parse(Console.ReadLine() ?? ""), MaximoEntradas);
@@ -41,25 +41,28 @@ class Program
 
             Console.WriteLine();
 
-            diccionario.Add(palabraIngles, palabraEspañol);
+            diccionario.Add(new Tuple<string, string>(palabraIngles, palabraEspañol));
         }
 
         return diccionario;
     }
 
-    public static void Traducir(Dictionary<string, string> diccionario)
+    public static void Traducir(List<Tuple<string,string>> diccionario)
     {
-        Console.WriteLine("+: Escriba la palabra (en ingles) a traducir:");
+        Console.WriteLine("+: Escriba la palabra (español o ingles) a traducir:");
         string palabraATraducir = Console.ReadLine() ?? "";
 
-        if (diccionario.TryGetValue(palabraATraducir, out string? palabraEspañol))
-        {
-            Console.WriteLine($"!: La traducción de {palabraATraducir} es {palabraEspañol}");
-        } else
-        {
-            Console.WriteLine($"!: No existe una traducción para {palabraATraducir}");
+        foreach(Tuple<string,string> traduccion in diccionario) {
+            if (traduccion.Item1 == palabraATraducir) {
+                Console.WriteLine($"!: La traducción de {palabraATraducir} (ingles) es {traduccion.Item2} (español)");
+                return;
+            } else if(traduccion.Item2 == palabraATraducir) {
+                Console.WriteLine($"!: La traducción de {palabraATraducir} (español) es {traduccion.Item1} (ingles)");
+                return;
+            }
         }
-        Console.WriteLine();
+        
+        Console.WriteLine($"!: No existe una traducción para {palabraATraducir}");
     }
 
     static void Main(string[] args)
@@ -75,7 +78,7 @@ class Program
             ╚═════╝ ╚═╝ ╚═════╝ ╚═════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝ ╚═════╝ 
             """");
 
-        Dictionary<string, string> diccionario = new() { };
+        List<Tuple<string,string>> diccionario = new() { };
 
         bool exit = false;
         do
@@ -101,19 +104,19 @@ class Program
             switch(Opcion)
             {
                 case 1: diccionario = CrearDiccionario(); break;
-                case 2: Traducir(diccionario);  break;
+                case 2: Traducir(diccionario); Console.WriteLine(); break;
                 case 3:
                     {
                         int i = 0;
-                        foreach(KeyValuePair<string,string> traduccion in diccionario)
+                        foreach(Tuple<string,string> traduccion in diccionario)
                         {
                             i++;
                             Console.WriteLine(
                                 $""""
                                 --- ENTRADA #{i} ---
 
-                                  > Palabra en Ingles: {traduccion.Key}
-                                  > Palabra en Español: {traduccion.Value}
+                                  > Palabra en Ingles: {traduccion.Item1}
+                                  > Palabra en Español: {traduccion.Item2}
 
                                 """");
                         }

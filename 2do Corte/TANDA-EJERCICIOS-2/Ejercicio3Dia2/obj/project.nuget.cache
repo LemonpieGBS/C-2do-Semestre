@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "PEuLJ4MUqQAZnE9LHvbbDb9OE0SGKr85GhmfZ3kVoAgkwuIyqMXRfO3zC5kKbUklovwPiJKheXpJpr+ncGQi8g==",
+  "dgSpecHash": "js1BCqVv9lM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\labc202\\Documents\\UAM 2do Semestre\\2do Corte\\TANDA-EJERCICIOS-2\\Ejercicio3Dia2\\Ejercicio3Dia2.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "D:\\Documents\\Workspace - C#\\C-2do-Semestre\\2do Corte\\TANDA-EJERCICIOS-2\\Ejercicio3Dia2\\Ejercicio3Dia2.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\thefu\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.20\\microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "C:\\Users\\thefu\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.20\\microsoft.windowsdesktop.app.ref.7.0.20.nupkg.sha512",
+    "C:\\Users\\thefu\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.20\\microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512",
+    "C:\\Users\\thefu\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.20\\microsoft.netcore.app.host.win-x64.7.0.20.nupkg.sha512"
+  ],
   "logs": []
 }
